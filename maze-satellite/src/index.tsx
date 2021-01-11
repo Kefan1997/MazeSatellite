@@ -6,7 +6,6 @@ import { Coords, MazeWithThePassProps } from "./interfaces/maze-interfaces";
 type MazeType = boolean[][];
 
 const MazeWithThePass: React.FC<MazeWithThePassProps> = ({ copyCorrectPath } : MazeWithThePassProps ) => {
-  console.log(copyCorrectPath);
   return (
     <div>
       <div className="status">Canvas with the pass</div>
@@ -63,8 +62,6 @@ const Maze: React.FC = () => {
 
     recursiveSolve(maze, startPoint.x, startPoint.y);
     setCopyCorrectPath(correctPath);
-    console.log(copyCorrectPath);
-    console.log(correctPath);
     };
 
   const recursiveSolve = (maze: MazeType, x: number, y: number) => {
@@ -82,7 +79,7 @@ const Maze: React.FC = () => {
         return true;
       }
     }
-    if (x !== maze.length - 1) {
+    if (x !== maze[0].length - 1) {
       if (recursiveSolve(maze, x + 1, y)) {
         correctPath[y][x] = true;
         return true;
@@ -95,7 +92,7 @@ const Maze: React.FC = () => {
         return true;
       }
     }
-    if (y !== maze[0].length - 1) {
+    if (y !== maze.length - 1) {
       if (recursiveSolve(maze, x, y + 1)) {
         correctPath[y][x] = true;
         return true;

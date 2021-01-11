@@ -33,6 +33,8 @@ const Maze: React.FC = () => {
       }
     }
 
+    console.log(`x: ${startPoint.x}, y: ${startPoint.y} mazeCoordinate: ${maze[startPoint.y][startPoint.x]}`);
+
     const b = recursiveSolve(startPoint.x, startPoint.y); // add type
     console.log(b);
     console.log(maze);
@@ -45,31 +47,31 @@ const Maze: React.FC = () => {
       console.log("END!!!");
       return true;
     }
-    if (maze[x][y] || wasHere[x][y]) return false;
+    if (maze[y][x] || wasHere[y][x]) return false;
 
-    wasHere[x][y] = true;
+    wasHere[y][x] = true;
     if (x !== 0) {
       if (recursiveSolve(x - 1, y)) {
-        correctPath[x][y] = true;
+        correctPath[y][x] = true;
         return true;
       }
     }
     if (x !== maze.length - 1) {
       if (recursiveSolve(x + 1, y)) {
-        correctPath[x][y] = true;
+        correctPath[y][x] = true;
         return true;
       }
     }
 
     if (y !== 0) {
       if (recursiveSolve(x, y - 1)) {
-        correctPath[x][y] = true;
+        correctPath[y][x] = true;
         return true;
       }
     }
     if (y !== maze[0].length - 1) {
       if (recursiveSolve(x, y + 1)) {
-        correctPath[x][y] = true;
+        correctPath[y][x] = true;
         return true;
       }
     }

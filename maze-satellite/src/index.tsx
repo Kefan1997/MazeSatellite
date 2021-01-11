@@ -1,9 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import { Coords } from "./interfaces/maze-interfaces";
 
 type MazeType = boolean[][];
+
+const MazeWithThePass: React.FC<any> = ({ copyCorrectPath } : any ) => {
+  console.log(typeof copyCorrectPath);
+  return (
+    <div>
+      <div className="status">Canvas with the pass</div>
+      {copyCorrectPath.map((row, indexOfRow) => (
+        <div
+          className="board-row"
+          key={`Row #${indexOfRow} of correctPath`}
+          id={`Row #${indexOfRow} of correctPath`}
+        >
+          {row.map((square, indexOfSquare) => (
+            <span
+              className="square"
+              key={`Square #${indexOfSquare} in row #${indexOfRow} of correctPath`}
+              id={`Square #${indexOfSquare} in row #${indexOfRow} of correctPath`}
+            >
+              {square === false ? "X" : "="}
+            </span>
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+};
 
 const Maze: React.FC = () => {
   const _: boolean = false; // pass
@@ -25,6 +51,8 @@ const Maze: React.FC = () => {
   const startPoint: Coords = { x: 0, y: 3 };
   const endPoint: Coords = { x: 4, y: 0 };
 
+  const [copyCorrectPath, setCopyCorrectPath] = useState<MazeType>(undefined);
+
   const solveMaze = () => {
     for (let row: number = 0; row < wasHere.length; row++) {
       for (let col: number = 0; col < wasHere[row].length; col++) {
@@ -33,17 +61,15 @@ const Maze: React.FC = () => {
       }
     }
 
-    console.log(`x: ${startPoint.x}, y: ${startPoint.y} mazeCoordinate: ${maze[startPoint.y][startPoint.x]}`);
-
-    const b = recursiveSolve(startPoint.x, startPoint.y); // add type
-    console.log(b);
-    console.log(maze);
-    console.log(wasHere);
+    recursiveSolve(maze, startPoint.x, startPoint.y);
+    setCopyCorrectPath(correctPath);
+    console.log(copyCorrectPath);
     console.log(correctPath);
-  };
+    };
 
-  const recursiveSolve = (x: number, y: number) => {
+  const recursiveSolve = (maze: MazeType, x: number, y: number) => {
     if (x === endPoint.x && y === endPoint.y) {
+      correctPath[endPoint.y][endPoint.x] = true;
       console.log("END!!!");
       return true;
     }
@@ -51,26 +77,26 @@ const Maze: React.FC = () => {
 
     wasHere[y][x] = true;
     if (x !== 0) {
-      if (recursiveSolve(x - 1, y)) {
+      if (recursiveSolve(maze, x - 1, y)) {
         correctPath[y][x] = true;
         return true;
       }
     }
     if (x !== maze.length - 1) {
-      if (recursiveSolve(x + 1, y)) {
+      if (recursiveSolve(maze, x + 1, y)) {
         correctPath[y][x] = true;
         return true;
       }
     }
 
     if (y !== 0) {
-      if (recursiveSolve(x, y - 1)) {
+      if (recursiveSolve(maze, x, y - 1)) {
         correctPath[y][x] = true;
         return true;
       }
     }
     if (y !== maze[0].length - 1) {
-      if (recursiveSolve(x, y + 1)) {
+      if (recursiveSolve(maze, x, y + 1)) {
         correctPath[y][x] = true;
         return true;
       }
@@ -88,14 +114,14 @@ const Maze: React.FC = () => {
           {copyMaze.map((row, indexOfRow) => (
             <div
               className="board-row"
-              key={`Row #${indexOfRow}`}
-              id={`Row #${indexOfRow}`}
+              key={`Row #${indexOfRow} of copyMaze`}
+              id={`Row #${indexOfRow} of copyMaze`}
             >
               {row.map((square, indexOfSquare) => (
                 <span
                   className="square"
-                  key={`Square #${indexOfSquare} in row #${indexOfRow}`}
-                  id={`Square #${indexOfSquare} in row #${indexOfRow}`}
+                  key={`Square #${indexOfSquare} in row #${indexOfRow} of copyMaze`}
+                  id={`Square #${indexOfSquare} in row #${indexOfRow} of copyMaze`}
                 >
                   {square === false ? "_" : "X"}
                 </span>
@@ -110,6 +136,11 @@ const Maze: React.FC = () => {
           defaultValue="Find the pass to the exit"
         />
       </div>
+      {copyCorrectPath ? (
+        <MazeWithThePass copyCorrectPath={copyCorrectPath} />
+      ) : (
+        <h3>Press the button to find the pass from the maze</h3>
+      )}
     </>
   );
 };

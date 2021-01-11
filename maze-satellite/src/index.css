@@ -1,0 +1,66 @@
+body {
+  font: 14px "Century Gothic", Futura, sans-serif;
+  margin: 20px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.board-row:after {
+  clear: both;
+  content: "";
+  display: table;
+}
+
+/* br {
+  clear: both;
+} */
+
+.status {
+  margin-bottom: 10px;
+}
+
+.button_canvas,
+.button_active {
+  cursor: pointer;
+}
+
+.button_inactive {
+  opacity: 0.7;
+}
+
+.square {
+  background: #fff;
+  border: 1px solid #999;
+  float: left;
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 34px;
+  height: 34px;
+  margin-right: -1px;
+  margin-top: -1px;
+  padding: 0;
+  text-align: center;
+  width: 34px;
+}
+
+.square:focus {
+  outline: none;
+}
+
+.kbd-navigation .square:focus {
+  background: #ddd;
+}
+
+.canvas {
+  display: flex;
+  flex-direction: column;
+}
+
+.canvas-info {
+  margin-left: 20px;
+}

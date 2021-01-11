@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import { Coords } from "./interfaces/maze-interfaces";
+import { Coords, MazeWithThePassProps } from "./interfaces/maze-interfaces";
 
 type MazeType = boolean[][];
 
-const MazeWithThePass: React.FC<any> = ({ copyCorrectPath } : any ) => {
-  console.log(typeof copyCorrectPath);
+const MazeWithThePass: React.FC<MazeWithThePassProps> = ({ copyCorrectPath } : MazeWithThePassProps ) => {
+  console.log(copyCorrectPath);
   return (
     <div>
       <div className="status">Canvas with the pass</div>
@@ -51,7 +51,7 @@ const Maze: React.FC = () => {
   const startPoint: Coords = { x: 0, y: 3 };
   const endPoint: Coords = { x: 4, y: 0 };
 
-  const [copyCorrectPath, setCopyCorrectPath] = useState<MazeType>(undefined);
+  const [copyCorrectPath, setCopyCorrectPath] = useState<MazeType>();
 
   const solveMaze = () => {
     for (let row: number = 0; row < wasHere.length; row++) {
@@ -107,7 +107,6 @@ const Maze: React.FC = () => {
   return (
     <>
       <div>Hello Worker</div>
-
       <div className="canvas-board">
         <div>
           <div className="status">Canvas</div>
@@ -139,7 +138,7 @@ const Maze: React.FC = () => {
       {copyCorrectPath ? (
         <MazeWithThePass copyCorrectPath={copyCorrectPath} />
       ) : (
-        <h3>Press the button to find the pass from the maze</h3>
+        <div>Press the button to find the pass from the maze</div>
       )}
     </>
   );

@@ -16,21 +16,10 @@ code {
   display: table;
 }
 
-/* br {
-  clear: both;
-} */
-
-.status {
-  margin-bottom: 10px;
-}
-
 .button_canvas,
 .button_active {
   cursor: pointer;
-}
-
-.button_inactive {
-  opacity: 0.7;
+  margin: 10px 0;
 }
 
 .square {
